@@ -157,6 +157,77 @@ let common = {
             html('table', result.html);
         });
     },
+    
+    // users
+
+    user_edit_window: (user_id, e) => {
+        // actions
+        cancel_event(e);
+        common.menu_popup_hide_all('all');
+        // vars
+        let data = {user_id: user_id};
+        let location = {dpt: 'user', act: 'edit_window'};
+        // call
+        request({location: location, data: data}, (result) => {
+            common.modal_show(400, result.html);
+        });
+    },
+
+    user_remove: (user_id) => {
+        let location = {dpt: 'user', act: 'remove'};
+        // call
+        request({location: location, data: { user_id: user_id, offset: global.offset}}, (result) => {
+	        common.modal_hide();
+            html('table', result.html);
+        });
+    },
+
+    user_edit_update: (user_id = 0) => {
+        // vars
+        let data = {
+            user_id: user_id,
+            first_name: gv('first_name'),
+            last_name: gv('last_name'),
+            phone: gv('phone'),
+            email: gv('email'),
+            plots: gv('plots'),
+            offset: global.offset
+        };
+
+        //front-end validation
+        //console.log(data); //debug
+        if(data.first_name.length == 0 || data.last_name.length == 0 || data.phone.length == 0 || data.email.length == 0)
+        {
+            alert("Please fill all required fields");
+            return;
+        }
+
+        let location = {dpt: 'user', act: 'edit_update'};
+        // call
+        request({location: location, data: data}, (result) => {
+	          common.modal_hide();
+            html('table', result.html);
+        });
+    },
+
+    user_delete: (user_id) => {
+        let location = {dpt: 'user', act: 'delete'};
+        // call
+        request({location: location, data: { user_id: user_id, offset: global.offset}}, (result) => {
+	          common.modal_hide();
+            html('table', result.html);
+        });
+
+    },
+
+    // validation
+
+    HighlightEmpty: (e) =>{
+        if(e.currentTarget.value.length <=0)
+            e.currentTarget.classList.add('error');
+        else
+            e.currentTarget.classList.remove('error');
+    }
 }
 
 add_event(document, 'DOMContentLoaded', common.init);

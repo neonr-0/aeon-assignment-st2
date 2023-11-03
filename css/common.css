@@ -252,3 +252,7 @@ table .gray {color: #777;}
 #login_note.fade {opacity: 0;}
 
 .login_controls > div {margin-top: 25px;}
+
+input.error{
+    border: red 1px solid;
+}
