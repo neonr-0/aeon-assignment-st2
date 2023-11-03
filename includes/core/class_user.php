@@ -155,6 +155,5 @@ class User {
 	    DB::query("DELETE FROM users WHERE user_id = '$user_id'"); 
         // output
         return self::users_fetch(['offset' => $d['offset']]);
-
     }
 }
